@@ -68,13 +68,20 @@ Shellnpx playwright install``Show more lines
 
 ▶️ Running Tests
 Run all tests:
-Shellnpx playwright testShow more lines
+npx playwright testShow more lines
+
 Run tests in headed mode:
-Shellnpx playwright test --headedShow more lines
+npx playwright test --headedShow more lines
+
 Run a specific test file:
-Shellnpx playwright test example.spec.ts``Show more lines
+npx playwright test example.spec.ts``Show more lines
+
+Run a specific test case:
+npm run test:headed -- --grep "single product"
+npx playwright test --headed --grep "single product"
+
 View the HTML test report:
-Shellnpx playwright show-reportShow more lines
+npx playwright show-reportShow more lines
 
 🧱 Playwright Configuration
 The main configuration file is:

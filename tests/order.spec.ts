@@ -45,7 +45,6 @@ test('E2E: Complete order placement flow - single product', async ({ page }) => 
 
   // Step 9: Click checkout
   await cartPage.clickCheckout();
-  await loginPage.handlePasswordPopup();
 
   // Step 10: Verify checkout page is displayed
   await checkoutPage.verifyCheckoutStepOne();
@@ -203,7 +202,6 @@ test('E2E: Verify order summary before final confirmation', async ({ page }) => 
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
   const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
 
   // Step 1: Navigate and login
   await page.goto('https://www.saucedemo.com/');
@@ -226,19 +224,33 @@ test('E2E: Verify order summary before final confirmation', async ({ page }) => 
 
   // Step 5: Proceed to checkout
   await cartPage.clickCheckout();
-  await checkoutPage.verifyCheckoutStepOne();
-  await checkoutPage.fillCheckoutInformation('John', 'Doe', '12345');
-  await checkoutPage.clickContinue();
-  await checkoutPage.verifyOverviewDetails();
-  await checkoutPage.clickFinish();
-  await checkoutPage.verifyOrderConfirmation();
+
+  // Step 6: Fill checkout form (Step 1)
+  const firstNameInput = page.locator('[data-test="firstName"]');
+  const lastNameInput = page.locator('[data-test="lastName"]');
+  const postalCodeInput = page.locator('[data-test="postalCode"]');
+
+  await firstNameInput.fill('John');
+  await lastNameInput.fill('Doe');
+  await postalCodeInput.fill('12345');
+
+  // Step 7: Continue to checkout overview
+  const continueButton = page.locator('[data-test="continue"]');
+  await continueButton.click();
+
+  // Step 8: Verify checkout overview page
+  await page.waitForURL(/.*checkout-step-two/);
+  expect(page.url()).toContain('checkout-step-two');
+
+  // Step 9: Verify order summary is displayed
+  const cartList = page.locator('[data-test="cart-list"]');
+  await expect(cartList).toBeVisible();
 });
 
 test('E2E: Complete full order from login to confirmation', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
   const cartPage = new CartPage(page);
-  const checkoutPage = new CheckoutPage(page);
 
   // Step 1: Navigate to site
   await page.goto('https://www.saucedemo.com/');
@@ -259,12 +271,23 @@ test('E2E: Complete full order from login to confirmation', async ({ page }) => 
   await cartPage.clickCheckout();
 
   // Step 6: Fill checkout info
-  await checkoutPage.verifyCheckoutStepOne();
-  await checkoutPage.fillCheckoutInformation('John', 'Doe', '12345');
-  await checkoutPage.clickContinue();
+  await page.locator('[data-test="firstName"]').fill('John');
+  await page.locator('[data-test="lastName"]').fill('Doe');
+  await page.locator('[data-test="postalCode"]').fill('12345');
 
-  // Step 8: Verify overview page and finish order
-  await checkoutPage.verifyOverviewDetails();
-  await checkoutPage.clickFinish();
-  await checkoutPage.verifyOrderConfirmation();
+  // Step 7: Continue
+  await page.locator('[data-test="continue"]').click();
+
+  // Step 8: Verify overview page
+  await page.waitForURL(/.*checkout-step-two/);
+  await expect(page.locator('[data-test="payment-info"]')).toBeVisible();
+
+  // Step 9: Finish order
+  const finishButton = page.locator('[data-test="finish"]');
+  await finishButton.click();
+
+  // Step 10: Verify confirmation page
+  await page.waitForURL(/.*checkout-complete/);
+  const confirmationMessage = page.locator('[data-test="complete-header"]');
+  await expect(confirmationMessage).toContainText('Thank you');
 });

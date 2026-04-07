@@ -8,7 +8,7 @@ export class CheckoutPage extends BasePage {
   readonly continueButton = this.page.locator('[data-test="continue"]');
   readonly cancelButton = this.page.locator('[data-test="cancel"]');
   readonly finishButton = this.page.locator('[data-test="finish"]');
-  readonly paymentInfo = this.page.locator('[data-test="payment-info"]');
+  readonly paymentInfo = this.page.locator('[data-test="payment-info-value"]');
   readonly orderSummary = this.page.locator('.summary_info');
   readonly cartList = this.page.locator('[data-test="cart-list"]');
   readonly itemTotal = this.page.locator('.summary_subtotal_label');
@@ -21,7 +21,7 @@ export class CheckoutPage extends BasePage {
   }
 
   async verifyCheckoutStepOne() {
-    await expect(this.page).toHaveURL(/.*checkout-step-one.*/);
+    await expect(this.page).toHaveURL(/.*checkout-step-one*/);
     await expect(this.firstNameInput).toBeVisible();
   }
 
