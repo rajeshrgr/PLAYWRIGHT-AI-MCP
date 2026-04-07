@@ -1,0 +1,24 @@
+{
+  "name": "playwright-ai-mcp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:qa": "ENVIRONMENT=qa playwright test",
+    "test:stage": "ENVIRONMENT=stage playwright test",
+    "test:prod": "ENVIRONMENT=prod playwright test",
+    "test:local": "ENVIRONMENT=local playwright test",
+    "test:headed": "playwright test --headed",
+    "test:headed:local": "ENVIRONMENT=local playwright test --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.0",
+    "dotenv": "^17.4.0"
+  }
+}
