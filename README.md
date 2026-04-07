@@ -1,9 +1,10 @@
-#PLAYWRIGHT-AI-MCP
+
+# PLAYWRIGHT-AI-MCP
 # Playwright Automation Framework (TypeScript + MCP)
 
-A modern end‑to‑end (E2E) test automation framework built with **Playwright** and **TypeScript**, integrated with an **MCP (Model Context Protocol) server** for AI‑assisted workflows in **Visual Studio Code**.
+A modern end‑to‑end (E2E) test automation framework built using **Playwright** and **TypeScript**, integrated with **MCP (Model Context Protocol)** servers to enable AI‑assisted workflows in **Visual Studio Code**.
 
-This framework is designed for scalability, maintainability, and future‑ready AI tooling support.
+This framework is designed for **scalability**, **maintainability**, and **future‑ready AI tooling support**.
 
 ---
 
@@ -12,7 +13,7 @@ This framework is designed for scalability, maintainability, and future‑ready 
 - **Playwright** – Cross‑browser automation (Chromium, Firefox, WebKit)
 - **TypeScript** – Strong typing and better code quality
 - **Node.js** – JavaScript runtime
-- **MCP Server** – Model Context Protocol integration
+- **MCP (Model Context Protocol)** – AI context integration
 - **Visual Studio Code** – Recommended IDE
 - **npm** – Package manager
 
@@ -20,14 +21,35 @@ This framework is designed for scalability, maintainability, and future‑ready 
 
 ## 📁 Project Structure
 
+PLAYWRIGHT-AI-MCP/
+│
+├── src/
+│   ├── tests/              # Test specifications
+│   ├── pages/              # Page Object Models (POM)
+│   ├── fixtures/           # Test fixtures
+│   └── utils/              # Utility helpers
+│
+├── mcp/
+│   └── server.ts           # Optional custom MCP server
+│
+├── playwright.config.ts
+├── tsconfig.json
+├── package.json
+├── .env
+├── .gitignore
+└── README.md
+
+---
+
 ## ✅ Prerequisites
 
-Make sure the following tools are installed:
+Ensure the following tools are installed:
 
 - **Node.js** (v18 or later)
 - **npm**
 - **Git**
 - **Visual Studio Code**
+- **GitHub Copilot (recommended for MCP integration)**
 
 Verify installation:
 
@@ -35,160 +57,160 @@ Verify installation:
 node -v
 npm -v
 
-Installation
-Clone the repository
 
-git clone https://github.com/<your-org>/PLAYWRIGHT-AI-MCP.git
-cd PLAYWRIGHT-AI-MCP
+📦 Installation
+Clone the repository:
+Shellgit clone https://github.com/<your-org>/PLAYWRIGHT-AI-MCP.gitcd PLAYWRIGHT-AI-MCPShow more lines
+Install dependencies:
+Shellnpm installShow more lines
+Install Playwright browsers:
+Shellnpx playwright install``Show more lines
 
-npm install
-npx playwright install
+▶️ Running Tests
+Run all tests:
+Shellnpx playwright testShow more lines
+Run tests in headed mode:
+Shellnpx playwright test --headedShow more lines
+Run a specific test file:
+Shellnpx playwright test example.spec.ts``Show more lines
+View the HTML test report:
+Shellnpx playwright show-reportShow more lines
 
-# Running all test cases
-npx playwright test
-
-# Run tests in headed mode:
-npx playwright test --headed
-
-# Run a specific test file:
-npx playwright test example.spec.ts
-
-# Generate and view the test report:
-npx playwright show-report
-
-Playwright Configuration
-The main configuration is located in:
+🧱 Playwright Configuration
+The main configuration file is:
 playwright.config.ts
-This includes:
+
+It includes:
 
 Browser configuration
 Parallel execution
-Retries
-Base URL
+Retry strategy
+Base URL configuration
 Reporting options
 
 
-MCP (Model Context Protocol)
+🧠 MCP (Model Context Protocol)
 What is MCP?
-MCP (Model Context Protocol) enables AI tools and editors (like VS Code) to interact with your project context such as:
+MCP (Model Context Protocol) enables AI tools (such as GitHub Copilot in VS Code) to understand and interact with your project context, including:
 
 Test files
-Configurations
+Playwright configurations
 Scripts
-Project metadata
+Repository metadata
 
-This allows for:
+This enables:
 
 AI‑assisted test generation
-Context‑aware suggestions
+Context‑aware code suggestions
 Intelligent automation workflows
 
-⚙️ MCP Server Configuration
-MCP Server Example
-Create the MCP server in mcp/server.ts:
-TypeScriptimport { Server } from "@modelcontextprotocol/sdk/server";const server = new Server({  name: "playwright-mcp-server",  version: "1.0.0",});server.start();Show more lines
-Start the MCP server:
-Shellnode mcp/server.tsShow more lines
 
-Visual Studio Code MCP Setup
+⚙️ MCP Server Configuration (Single File Setup)
+Visual Studio Code MCP Configuration
 Create the following file:
 .vscode/mcp.json
 
-Add this configuration:
+Add the configuration below:
+JSON{  "servers": {    "github": {      "type": "http",      "url": "https://api.githubcopilot.com/mcp"    },    "playwright": {      "command": "npx",      "args": ["-y", "@microsoft/mcp-server-playwright"]    }  }}``Show more lines
 
-
-{
-  "servers": {
-    "github": {
-      "type": "http",
-      "url": "https://api.githubcopilot.com/mcp"
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@microsoft/mcp-server-playwright"]
-    }
-  }
-}
-
-GitHub MCP Server
-
-"github": {
-  "type": "http",
-  "url": "https://api.githubcopilot.com/mcp"
-}
-
-✅ Purpose:
+🔹 GitHub MCP Server
+JSON{  "type": "http",  "url": "https://api.githubcopilot.com/mcp"}Show more lines
+Purpose
 
 Connects VS Code to GitHub Copilot’s MCP endpoint
-Enables AI context awareness across:
+Enables AI awareness of:
 
 Repositories
-Issues
 Pull requests
+Issues
 Code structure
 
 
 
-✅ How it works:
+How it Works
 
-Uses an HTTP‑based MCP server
-Managed automatically by GitHub
+HTTP‑based MCP server
+Managed by GitHub
 Requires an active GitHub Copilot subscription
 No local process required
 
-✅ Typical use cases:
+Use Cases
 
 AI‑assisted code understanding
 Context‑aware explanations
 Smarter test suggestions
 
 
-2️⃣ Playwright MCP Server
-
-playwright": {
-  "command": "npx",
-  "args": ["-y", "@microsoft/mcp-server-playwright"]
-}
-
-✅ Purpose:
+🔹 Playwright MCP Server
+JSON{  "command": "npx",  "args": ["-y", "@microsoft/mcp-server-playwright"]}``Show more lines
+Purpose
 
 Starts a local MCP server for Playwright
 Exposes Playwright APIs and test context to AI tools
 
-✅ How it works:
+How it Works
 
-Uses npx to run the official Playwright MCP server
--y auto‑confirms package installation
-Runs directly from your project workspace
+Uses npx to run the official Microsoft Playwright MCP server
+-y auto‑confirms installation
+Runs directly from the workspace
 
-✅ Capabilities:
+Capabilities
 
 AI‑driven test generation
 Understanding existing Playwright tests
-Suggesting locators and assertions
+Locator and assertion suggestions
 Test refactoring assistance
 
 
-▶️ How the MCP Servers Are Started
+▶️ MCP Server Startup Behavior
 
 
-GitHub MCP:
-Runs remotely via HTTPS (no local command)
+GitHub MCP Server
+
+Runs remotely via HTTPS
+No local startup required
 
 
-Playwright MCP:
-Started automatically by VS Code using:
-Shellnpx -y @microsoft/mcp-server-playwrightShow more lines
+
+Playwright MCP Server
+
+Automatically started by VS Code using:
+JSONnpx -y @microsoft/mcp-server-playwright``Show more lines
 
 
-No manual startup is required.
 
-✅ Prerequisites
-Make sure you have:
+✅ No manual MCP startup required
 
-Node.js 18+
-npm
-Visual Studio Code
-GitHub Copilot enabled
+🧪 Sample Test
+JSONimport { test, expect } from "@playwright/test";test("Validate homepage title", async ({ page }) => {  await page.goto("https://example.com");  await expect(page).toHaveTitle(/Example/);});Show more lines
 
-Verify Node:
+🌍 Environment Configuration
+Create a .env file if required:
+Plain Textenv isn’t fully supported. Syntax highlighting is based on Plain Text.BASE_URL=https://example.comUSERNAME=testuserPASSWORD=secretShow more lines
+
+🧩 Recommended VS Code Extensions
+
+Playwright Test for VS Code
+GitHub Copilot
+ESLint
+Prettier
+GitLens
+
+
+✅ Best Practices Followed
+
+Page Object Model (POM)
+Type‑safe locators
+Reusable utilities
+Environment‑based configuration
+Parallel test execution
+AI‑ready MCP integration
+
+
+📄 License
+This project is licensed under the MIT License.
+
+👨‍💻 Author
+Rajesh G
+QA Lead – Automation & AI Testing
+Bengaluru, India
