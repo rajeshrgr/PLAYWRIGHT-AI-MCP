@@ -118,10 +118,28 @@ Create the following file:
 .vscode/mcp.json
 
 Add the configuration below:
-JSON{  "servers": {    "github": {      "type": "http",      "url": "https://api.githubcopilot.com/mcp"    },    "playwright": {      "command": "npx",      "args": ["-y", "@microsoft/mcp-server-playwright"]    }  }}``Show more lines
+JSON{ 
+ "servers": {   
+  "github": {   
+     "type": "http",   
+     "url": "https://api.githubcopilot.com/mcp" 
+    },
+        "playwright": {   
+           "command": "npx",   
+              "args": [
+                "-y", 
+              "@microsoft/mcp-server-playwright"
+              ]   
+        } 
+      }
+    }
 
 🔹 GitHub MCP Server
-JSON{  "type": "http",  "url": "https://api.githubcopilot.com/mcp"}Show more lines
+JSON{
+  "type": "http",
+    "url": "https://api.githubcopilot.com/mcp"
+    }
+    
 Purpose
 
 Connects VS Code to GitHub Copilot’s MCP endpoint
